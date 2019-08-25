@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lizi/pages/about_page.dart';
+import 'package:lizi/pages/color_lens_page.dart';
 import 'package:lizi/pages/discover_page.dart';
 import 'package:lizi/pages/error_page.dart';
 import 'package:lizi/pages/page.dart';
@@ -29,7 +30,8 @@ class HomePageState extends State<HomePage> {
             return SearchBar('发现', PageHelper.pushPage(context, SearchPage()));
             break;
           case Page.aboutPage:
-            return AboutBar(PageHelper.pushPage(context, SettingPage()));
+            return AboutBar(PageHelper.pushPage(context, SettingPage()),
+                PageHelper.pushPage(context, ColorLensPage()));
             break;
           default:
             return AppBar(

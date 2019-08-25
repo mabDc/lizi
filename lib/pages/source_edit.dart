@@ -16,7 +16,7 @@ class SourceEditState extends State<SourceEdit> {
     widget._source.forEach((ruleName, rule) {
       _body.add(TextField(
         minLines: 1,
-        maxLines: 30,
+        maxLines: 18,
         controller: TextEditingController(text: rule.toString()),
         decoration: InputDecoration(
           labelText: ruleName,

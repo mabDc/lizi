@@ -46,7 +46,7 @@ class Config {
     Colors.grey,
     Colors.blueGrey
   ];
-  static dynamic option = {
+  static Map<String, dynamic> option = {
     isAutoRefresh: false,
     isFullScreen: true,
     isVolumeControl: false,
@@ -54,19 +54,21 @@ class Config {
     searchTypeIndex: 1,
     themeIndex: 0,
   };
-  static List<String> history = <String>[];
+  static List<dynamic> history = <dynamic>[];
   static Color primaryColor = themeList[option[themeIndex]];
   void init() async {
     _localPath = await _getLocalPath();
     try {
       String optionString = await _getConfig(_optionFile);
-      option = jsonDecode(optionString);
+      option = jsonDecode(optionString) as Map<String, dynamic>;
     } catch (e) {
+      print(e.toString()); 
     }
     try {
       String historyString = await _getConfig(this._historyFile);
-      history = jsonDecode(historyString);
+      history = jsonDecode(historyString) as List<dynamic>;
     } catch (e) {
+      print(e.toString()); 
     }
   }
 
@@ -75,20 +77,20 @@ class Config {
     return _saveConfig(_optionFile, option);
   }
 
-  Future<void> changeTheme(Color color) {
-    primaryColor = color;
+  Future<void> changeTheme(int _themeIndex) {
+    primaryColor = themeList[_themeIndex];
+    changeOption(themeIndex, _themeIndex);
   }
 
   Future<void> changeHistory({List<String> history}) {
     if (history != null) {
       Config.history = history;
     }
-    return _saveConfig(_historyFile, history);
+    return _saveConfig(_historyFile, Config.history);
   }
 
   Future<void> _saveConfig(String configName, dynamic config) {
-    return File('$_localPath/$configName')
-        .writeAsString(jsonEncode(config));
+    return File('$_localPath/$configName').writeAsString(jsonEncode(config));
   }
 
   Future<String> _getConfig(String configName) {

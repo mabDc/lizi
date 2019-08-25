@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class AboutBar extends AppBar {
   final VoidCallback _setting;
-  AboutBar(this._setting);
+  final VoidCallback _colorLens;
+  AboutBar(this._setting, this._colorLens);
 
   @override
   Widget get title => Text('关于');
@@ -11,9 +12,9 @@ class AboutBar extends AppBar {
   List<Widget> get actions => <Widget>[
         IconButton(
           icon: Icon(
-            Icons.map,
+            Icons.color_lens,
           ),
-          onPressed: ()=>print('color theme'),
+          onPressed: _colorLens,
         ),
         IconButton(
           icon: Icon(

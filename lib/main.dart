@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lizi/global/config.dart';
 import 'package:lizi/pages/home_page.dart';
 
-void main() async {
+void main(){
   
   Config();
   Config().init();

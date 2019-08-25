@@ -4,37 +4,103 @@ import 'package:lizi/global/config.dart';
 class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: <Widget>[
         Container(
           color: Config.primaryColor,
           height: 280.0,
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  '栗子',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 80.0,
-                    fontStyle: FontStyle.italic,
+            child: ListTile(
+              title: Text(
+                '栗子',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 120.0,
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              subtitle: Text(
+                'version 1.0.0.0',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22.0,
+                  height: 2,
+                  color: Colors.white,
+                ),
+              ),
+              onTap: () => showAboutDialog(
+                context: context,
+                applicationVersion: '1.0.0.0',
+                children: <Widget>[
+                  ListTile(
+                    title: Text('2019/08/24'),
+                    subtitle: Text('bata 2\nbata 1'),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20.0),
-                ),
-                Text(
-                  'version 1.0.0.0',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.0,
+                  Divider(),
+                  ListTile(
+                    title: Text('2019/08/24'),
+                    subtitle: Text('alpha 2\nalpha 1'),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            //   () => showAboutDialog(
+            //   context: context,
+            //   applicationVersion: '1.0.0.0',
+            //   children: <Widget>[
+            //     ListTile(
+            //       title: Text('2019/08/24'),
+            //       subtitle: Text('bata 2\nbata 1'),
+            //     ),
+            //     Divider(),
+            //     ListTile(
+            //       title: Text('2019/08/24'),
+            //       subtitle: Text('alpha 2\nalpha 1'),
+            //     ),
+            //   ],
+            // ),
+            // title:
+            // subtitle: Text(
+            //   'version 1.0.0.0',
+            //   textAlign: TextAlign.center,
+            //   style: TextStyle(
+            //     fontSize: 22.0,
+            //     height: 2,
+            //     color: Colors.white,
+            //   ),
+            // ),
           ),
         ),
+        // Container(
+        //   color: Config.primaryColor,
+        //   height: 280.0,
+        //   child: Center(
+        //     child: Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: <Widget>[
+        //         Text(
+        //           '栗子',
+        //           style: TextStyle(
+        //             color: Colors.white,
+        //             fontSize: 80.0,
+        //             fontStyle: FontStyle.italic,
+        //           ),
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(bottom: 20.0),
+        //         ),
+        //         Text(
+        //           'version 1.0.0.0',
+        //           style: TextStyle(
+        //             color: Colors.white,
+        //             fontSize: 22.0,
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         ListTile(
           title: Text(
             '检查更新',
@@ -42,21 +108,7 @@ class AboutPage extends StatelessWidget {
           subtitle: Text(
             '点击检查更新',
           ),
-          onTap: () => showAboutDialog(
-            context: context,
-            applicationVersion: '1.0.0.0',
-            children: <Widget>[
-              ListTile(
-                title: Text('2019/08/24'),
-                subtitle: Text('bata 2\nbata 1'),
-              ),
-              Divider(),
-              ListTile(
-                title: Text('2019/08/24'),
-                subtitle: Text('alpha 2\nalpha 1'),
-              ),
-            ],
-          ),
+          onTap: () => print('tap check update'),
         ),
         Divider(),
         ListTile(
