@@ -77,7 +77,7 @@ class SearchU17 {
   void image(BuildContext context, String name, String id) {
     http
         .get(
-            'http://app.u17.com/v3/appV3_3/android/phone/comic/chapterNew?chapter_id=$id&key=12d22baf264f3eb288a6d08b8d278af1410c5dfc2c6b8329b261b8cf7b0fa67f2af4161b612205108eb0c0112781f126a90ec2a86e12dfc5b56444585c8528a044bcb459350802a8d7aa289b0201af86736803009467ff1b%3A%3A%3Au17')
+            'http://app.u17.com/v3/appV3_3/android/phone/comic/chapterNew?chapter_id=$id')
         .then((response) {
       final json = jsonDecode(response.body);
       List list = json["data"]["returnData"]["image_list"];
