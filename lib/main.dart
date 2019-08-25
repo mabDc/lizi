@@ -15,35 +15,3 @@ void main() async{
       ),
     ));
 }
-
-
-
-// import 'package:scoped_model/scoped_model.dart';
- 
-// abstract class ThemeStateModel extends Model {
- 
-//   int _themeIndex;
-//   get themeIndex => _themeIndex;
- 
-//   void changeTheme(int themeIndex) async {
-//     _themeIndex = themeIndex;
-//     notifyListeners();
-//   }
-
-
-// @override
-// Widget build(BuildContext context) {
-//     return ScopedModel<MainStateModel>(
-//       model: mainStateModel,
-//       child: ScopedModelDescendant<MainStateModel>(
-//         builder: (context, child, model) {
-//           return  MaterialApp(
-//             theme: ThemeData(
-//               primaryColor: themeList[model.themeIndex != null ? model.themeIndex : widget.themeIndex]
-//             ),
-//             home: HomePage(),
-//           );
-//         },
-//       )
-//     );
-// }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class SourceEdit extends StatefulWidget {
+class SourceEditPage extends StatefulWidget {
   final String _name;
   final Map<String, dynamic> _source;
-  SourceEdit(this._name, this._source);
+  SourceEditPage(this._name, this._source);
   @override
-  State createState() => SourceEditState();
+  State createState() => SourceEditPageState();
 }
 
-class SourceEditState extends State<SourceEdit> {
+class SourceEditPageState extends State<SourceEditPage> {
   @override
   Widget build(BuildContext context) {
     final _body = <Widget>[];

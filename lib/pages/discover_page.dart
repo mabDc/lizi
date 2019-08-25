@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lizi/pages/discover_show_page.dart';
-import 'package:lizi/pages/source_edit.dart';
+import 'package:lizi/pages/source_edit_page.dart';
 import 'package:lizi/source/U17.dart';
 import 'package:lizi/ui/source_item.dart';
 import 'package:lizi/utils/page_helper.dart';
@@ -13,7 +13,7 @@ class DiscoverPage extends StatelessWidget {
         SourceItem(
           U17.name,
           PageHelper.pushPage(context,
-              SourceEdit(U17.name, U17.source as Map<String, dynamic>)),
+              SourceEditPage(U17.name, U17.source as Map<String, dynamic>)),
           PageHelper.pushPage(context, DiscoverShowPage('发现 - ${U17.name}')),
         ),
         Divider(),
