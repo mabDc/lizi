@@ -82,7 +82,7 @@ class Config {
 
   Future<void> changeTheme(int _themeIndex) {
     primaryColor = themeList[_themeIndex];
-    changeOption(themeIndex, _themeIndex);
+    return changeOption(themeIndex, _themeIndex);
   }
 
   Future<void> changeHistory({List<String> history}) {
