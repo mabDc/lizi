@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lizi/constants.dart';
 import 'package:lizi/pages/about_page.dart';
 import 'package:lizi/pages/discover_page.dart';
 import 'package:lizi/pages/error_page.dart';
@@ -17,12 +16,6 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   Page _page = Page.values[0];
-
-  @override
-  void initState() {
-    super.initState();
-    Constants().init();
-  }
 
   @override
   Widget build(BuildContext context) {

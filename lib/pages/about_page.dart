@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lizi/global/config.dart';
 
 class AboutPage extends StatelessWidget {
   @override
@@ -6,12 +7,11 @@ class AboutPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          color: Colors.blueAccent,
-          height: 300.0,
+          color: Config.primaryColor,
+          height: 280.0,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
                   '栗子',
@@ -64,21 +64,16 @@ class AboutPage extends StatelessWidget {
             '源代码',
           ),
           subtitle: Text(
-            'https://none.blackhole.global/',
+            'https://github.com/mabDc/lizi',
           ),
-          onTap: () => showAboutDialog(
-            context: context,
-            children: <Widget>[
-              Text('这是源码'),
-            ],
-          ),
+          onTap: () => print('tap source'),
         ),
         Divider(),
         ListTile(
           title: Text(
             '信息统计',
           ),
-          onTap: () => print('data statics'),
+          onTap: () => print('tap data statics'),
         ),
         Divider(),
       ],

@@ -11,6 +11,12 @@ class AboutBar extends AppBar {
   List<Widget> get actions => <Widget>[
         IconButton(
           icon: Icon(
+            Icons.map,
+          ),
+          onPressed: ()=>print('color theme'),
+        ),
+        IconButton(
+          icon: Icon(
             Icons.settings,
           ),
           onPressed: _setting,

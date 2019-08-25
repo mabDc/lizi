@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lizi/constants.dart';
+import 'package:lizi/global/config.dart';
+import 'package:lizi/ui/setting_switch.dart';
+import 'package:lizi/ui/text_with_theme.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -16,55 +18,15 @@ class SettingPageState extends State<SettingPage> {
       ),
       body: ListView(
         children: <Widget>[
-          ListTile(
-            title: Text(
-              '阅读设置',
-              style: TextStyle(color: Colors.blueAccent),
-            ),
-          ),
-          ListTile(
-            title: Text('全屏'),
-            trailing: Switch(
-              value: Constants.settingConfig[Constants.isFullScreen],
-              onChanged: (isActive) {
-                setState(() {
-                  Constants.settingConfig[Constants.isFullScreen] = isActive;
-                  Constants().saveConfig(Constants.settingConfig);
-                });
-              },
-            ),
-            onTap: () {
-              setState(() {
-                Constants.settingConfig[Constants.isFullScreen] = !Constants.settingConfig[Constants.isFullScreen];
-                Constants().saveConfig(Constants.settingConfig);
-              });
-            },
-          ),
-          ListTile(
-            title: Text('音量键控制'),
-            trailing: Switch(
-              value: Constants.settingConfig[Constants.isVolumeControl],
-              onChanged: (isActive) {
-                setState(() {
-                  Constants.settingConfig[Constants.isVolumeControl] = isActive;
-                  Constants().saveConfig(Constants.settingConfig);
-                });
-              },
-            ),
-            onTap: () {
-              setState(() {
-                Constants.settingConfig[Constants.isVolumeControl] = !Constants.settingConfig[Constants.isVolumeControl];
-                Constants().saveConfig(Constants.settingConfig);
-              });
-            },
-          ),
+          ListTile(title: TextWithTheme('启动设置')),
+          SettingSwitch('自动刷新', '启动应用时自动后台刷新', Config.isAutoRefresh),
           Divider(),
-          ListTile(
-            title: Text(
-              '下载设置',
-              style: TextStyle(color: Colors.blueAccent),
-            ),
-          ),
+          ListTile(title: TextWithTheme('阅读设置')),
+          SettingSwitch('全屏阅读', '浏览时全屏', Config.isFullScreen),
+          SettingSwitch('音量键控制', '音量键翻页', Config.isVolumeControl),
+          SettingSwitch('翻页动画', '翻页过渡动画', Config.isFlippingAnimation),
+          Divider(),
+          ListTile(title: TextWithTheme('下载设置')),
           ListTile(
             title: Text('路径'),
             subtitle: Text('/root/'),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lizi/constants.dart';
+import 'package:lizi/global/config.dart';
 import 'package:lizi/pages/discover_show_page.dart';
+import 'package:lizi/ui/text_with_theme.dart';
 import 'package:lizi/utils/page_helper.dart';
 
 class SearchPage extends StatefulWidget {
@@ -10,19 +11,39 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  String _searchType = Constants.searchConfig[Constants.searchType];
-  final List<String> _orginHistory =
-      Constants.searchConfig[Constants.history] as List<String>;
-  List<String> _history;
-
-  @override
-  void initState() {
-    super.initState();
-    _history = _orginHistory;
-  }
+  String realKeyword = '';
 
   @override
   Widget build(BuildContext context) {
+    final searchTypeList = Config.searchTypeList;
+    final searchTypeIndex = Config.option[Config.searchTypeIndex] as int;
+    final searchTypes = <Widget>[];
+    for (int i = 0; i < searchTypeList.length; ++i) {
+      searchTypes.add(Flexible(
+        child: RadioListTile<int>(
+          value: i,
+          title: Text(searchTypeList[i]),
+          groupValue: searchTypeIndex,
+          onChanged: (value) {
+            Config().changeOption(Config.searchTypeIndex, value);
+            setState(() {});
+          },
+        ),
+      ));
+    }
+
+    final history = <Widget>[];
+    for (int i = 0; i < Config.history.length; ++i) {
+      String keyword = Config.history[i];
+      if (keyword.contains(realKeyword)) {
+        history.add(ListTile(
+          title: Text(keyword),
+          onTap:
+              PageHelper.pushPage(context, DiscoverShowPage('搜索结果 - $keyword')),
+        ));
+      }
+    }
+
     final _themeData = ThemeData(primaryColor: Colors.white);
     return Scaffold(
       appBar: AppBar(
@@ -35,10 +56,9 @@ class SearchPageState extends State<SearchPage> {
           decoration: InputDecoration(
               hintText: '搜索名称或作者', suffixIcon: Icon(Icons.search)),
           onSubmitted: (keyword) {
-            if (!_orginHistory.contains(keyword)) {
-              Constants.searchConfig[Constants.history] = _orginHistory
-                ..add(keyword);
-              Constants().saveConfig(Constants.searchConfig);
+            if (!Config.history.contains(keyword)) {
+              Config.history.add(keyword);
+              Config().changeHistory();
             }
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) =>
@@ -46,13 +66,7 @@ class SearchPageState extends State<SearchPage> {
           },
           onChanged: (keyword) {
             setState(() {
-              List<String> newHistory = <String>[];
-              _orginHistory.forEach((history) {
-                if (history.contains(keyword)) {
-                  newHistory.add(history);
-                }
-              });
-              _history = newHistory;
+              realKeyword = keyword;
             });
           },
         ),
@@ -66,82 +80,24 @@ class SearchPageState extends State<SearchPage> {
       body: Center(
         child: ListView(
           children: <Widget>[
-            ListTile(
-              title: Text(
-                '搜索设置',
-                style: TextStyle(color: Colors.blueAccent),
-              ),
-            ),
+            ListTile(title: TextWithTheme('搜索选项')),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Flexible(
-                  child: RadioListTile<String>(
-                    value: '模糊',
-                    title: Text('模糊'),
-                    groupValue: _searchType,
-                    onChanged: (value) {
-                      setState(() {
-                        Constants.searchConfig[Constants.searchType] = value;
-                        Constants().saveConfig(Constants.searchConfig);
-                        _searchType = value;
-                      });
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: RadioListTile<String>(
-                    value: '准确',
-                    title: Text('准确'),
-                    groupValue: _searchType,
-                    onChanged: (value) {
-                      setState(() {
-                        Constants.searchConfig[Constants.searchType] = value;
-                        Constants().saveConfig(Constants.searchConfig);
-                        _searchType = value;
-                      });
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: RadioListTile<String>(
-                    value: '精确',
-                    title: Text('精确'),
-                    groupValue: _searchType,
-                    onChanged: (value) {
-                      setState(() {
-                        Constants.searchConfig[Constants.searchType] = value;
-                        Constants().saveConfig(Constants.searchConfig);
-                        _searchType = value;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: searchTypes),
             Divider(),
             ListTile(
-              title: Text(
-                '搜索历史',
-                style: TextStyle(color: Colors.blueAccent),
-              ),
+              title: TextWithTheme('搜索历史'),
               trailing: IconButton(
                 icon: Icon(Icons.delete),
                 onPressed: () {
                   setState(() {
-                    _orginHistory.clear();
-                    Constants.searchConfig[Constants.history] = _orginHistory;
-                    Constants().saveConfig(Constants.searchConfig);
-                    _history = _orginHistory;
+                    Config.history.clear();
+                    Config().changeHistory();
                   });
                 },
               ),
             ),
-          ]..addAll(_history.map((keyword) => ListTile(
-                title: Text(keyword),
-                onTap: PageHelper.pushPage(
-                    context, DiscoverShowPage('搜索结果 - $keyword')),
-              ))),
+          ]..addAll(history),
         ),
       ),
     );
