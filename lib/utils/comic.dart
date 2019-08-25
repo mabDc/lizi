@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 
 class Comic {
   String name;
@@ -16,7 +15,7 @@ class Comic {
   }
 
   Comic({
-    @required this.name,
+    this.name,
     this.author,
     this.cover,
     this.url,

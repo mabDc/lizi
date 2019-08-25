@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lizi/global/config.dart';
 import 'package:lizi/ui/text_with_theme.dart';
 

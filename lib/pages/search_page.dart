@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:lizi/global/config.dart';
-import 'package:lizi/pages/discover_show_page.dart';
 import 'package:lizi/ui/text_with_theme.dart';
 import 'package:lizi/source/search_u17.dart';
-import 'package:lizi/utils/page_helper.dart';
 
 class SearchPage extends StatefulWidget {
   @override

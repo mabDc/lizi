@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:lizi/global/config.dart';
 
-class SettingSwitch extends StatefulWidget {
+class OptionSwitch extends StatefulWidget {
   final String _title;
   final String _subtitle;
   final String _optionName;
 
-  SettingSwitch(this._title, this._subtitle, this._optionName);
+  OptionSwitch(this._title, this._subtitle, this._optionName);
 
   @override
-  State createState() => SettingSwitchState();
+  State createState() => OptionSwitchState();
 }
 
-class SettingSwitchState extends State<SettingSwitch> {
+class OptionSwitchState extends State<OptionSwitch> {
   @override
   Widget build(BuildContext context) {
     return ListTile(

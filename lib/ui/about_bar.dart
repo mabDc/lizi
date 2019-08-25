@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AboutBar extends AppBar {
-  final VoidCallback _setting;
+  final VoidCallback _settings;
   final VoidCallback _colorLens;
-  AboutBar(this._setting, this._colorLens);
+  AboutBar(this._settings, this._colorLens);
 
   @override
   Widget get title => Text('关于');
@@ -20,7 +20,7 @@ class AboutBar extends AppBar {
           icon: Icon(
             Icons.settings,
           ),
-          onPressed: _setting,
+          onPressed: _settings,
         ),
       ];
 }

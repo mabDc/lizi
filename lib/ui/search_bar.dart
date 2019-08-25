@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class SearchBar extends AppBar {
-  final String titleText;
+  final String _titleText;
   final VoidCallback _toggleSearch;
-  SearchBar(this.titleText, this._toggleSearch);
+  SearchBar(this._titleText, this._toggleSearch);
 
   @override
-  Widget get title => Text(titleText);
+  Widget get title => Text(_titleText);
 
   @override
   List<Widget> get actions => <Widget>[
