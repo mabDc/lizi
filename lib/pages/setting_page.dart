@@ -17,8 +17,9 @@ class SettingPageState extends State<SettingPage> {
       ),
       body: ListView(
         children: <Widget>[
-          ListTile(title: TextWithTheme('启动设置')),
+          ListTile(title: TextWithTheme('主页设置')),
           OptionSwitch('自动刷新', '启动应用时自动后台刷新', Config.isAutoRefresh),
+          OptionSwitch('页面滑动', '可滑动切换页面导航', Config.isSlidingNavigationBar),
           Divider(),
           ListTile(title: TextWithTheme('阅读设置')),
           OptionSwitch('全屏阅读', '浏览时全屏', Config.isFullScreen),

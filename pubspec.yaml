@@ -28,6 +28,7 @@ dependencies:
   path_provider: ^1.2.0
   http: ^0.12.0+2
   # chewie: ^0.9.7
+  # flutter_liquidcore: ^0.6.0+1
 
 dev_dependencies:
   flutter_test:

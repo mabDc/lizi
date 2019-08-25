@@ -21,6 +21,7 @@ class Config {
   static const isVolumeControl = 'isVolumeControl';
   static const isFlippingAnimation = 'isFlippingAnimation';
   static const isAutoRefresh = 'isAutoRefresh';
+  static const isSlidingNavigationBar = 'isSlidingNavigationBar';
   static const searchTypeIndex = 'searchTypeIndex';
   static const themeIndex = 'themeIndex';
 
@@ -50,6 +51,7 @@ class Config {
     isFullScreen: true,
     isVolumeControl: false,
     isFlippingAnimation: true,
+    isSlidingNavigationBar: true,
     searchTypeIndex: 1,
     themeIndex: 0,
   };

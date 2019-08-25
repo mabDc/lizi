@@ -10,7 +10,6 @@ class SearchPage extends StatefulWidget {
 
 class SearchPageState extends State<SearchPage> {
   String realKeyword = '';
-
   @override
   Widget build(BuildContext context) {
     final searchTypeList = Config.searchTypeList;
@@ -21,6 +20,7 @@ class SearchPageState extends State<SearchPage> {
         child: RadioListTile<int>(
           value: i,
           title: Text(searchTypeList[i]),
+          activeColor: Config.primaryColor,
           groupValue: searchTypeIndex,
           onChanged: (value) {
             Config().changeOption(Config.searchTypeIndex, value);
@@ -36,9 +36,18 @@ class SearchPageState extends State<SearchPage> {
       if (keyword.contains(realKeyword)) {
         history.add(ListTile(
           title: Text(keyword),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () async {
+              Config.history.remove(keyword);
+              await Config().changeHistory();
+              setState(() {});
+            },
+          ),
           onTap: () => SearchU17().search(context, keyword),
           //PageHelper.pushPage(context, DiscoverShowPage('搜索结果 - $keyword')),
         ));
+        history.add(Divider());
       }
     }
 
@@ -53,11 +62,11 @@ class SearchPageState extends State<SearchPage> {
           autofocus: true,
           decoration: InputDecoration(
               hintText: '搜索名称或作者', suffixIcon: Icon(Icons.search)),
-          onSubmitted: (keyword) {
+          onSubmitted: (keyword) async {
             keyword = keyword.trim();
             if (!Config.history.contains(keyword)) {
               Config.history.add(keyword);
-              Config().changeHistory();
+              await Config().changeHistory();
             }
             // Navigator.of(context).push(MaterialPageRoute(
             //     builder: (BuildContext context) =>
@@ -90,11 +99,11 @@ class SearchPageState extends State<SearchPage> {
               title: TextWithTheme('搜索历史'),
               trailing: IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () {
-                  setState(() {
-                    Config.history.clear();
-                    Config().changeHistory();
-                  });
+                tooltip: '清空历史',
+                onPressed: () async  {
+                  Config.history.clear();
+                  await  Config().changeHistory();
+                  setState(() {});
                 },
               ),
             ),

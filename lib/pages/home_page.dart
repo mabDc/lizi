@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:lizi/global/config.dart';
 import 'package:lizi/pages/about_page.dart';
-import 'package:lizi/pages/color_lens_page.dart';
 import 'package:lizi/pages/discover_page.dart';
-import 'package:lizi/pages/error_page.dart';
-import 'package:lizi/pages/page.dart';
 import 'package:lizi/pages/search_page.dart';
-import 'package:lizi/pages/setting_page.dart';
-import 'package:lizi/ui/about_bar.dart';
 import 'package:lizi/ui/search_bar.dart';
 import 'package:lizi/utils/page_helper.dart';
 
@@ -15,67 +11,72 @@ class HomePage extends StatefulWidget {
   State createState() => HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
-  Page _page = Page.values[0];
+class HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  int _currentIndex = 0;
+  TabController _tabcontroller;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabcontroller = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabcontroller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    
+    final text = "text";
+    final icon = "icon";
+    final navigationItems = [
+      {text: "主页", icon: Icons.library_books},
+      {text: "发现", icon: Icons.satellite},
+      {text: "关于", icon: Icons.info_outline},
+    ];
+
+    List<Widget> pages = <Widget>[
+      Scaffold(appBar: SearchBar('书架', PageHelper.pushPage(context, SearchPage())),),
+      DiscoverPage(),
+      AboutPage(),
+    ];
+
     return Scaffold(
-      appBar: (() {
-        switch (_page) {
-          case Page.shelfPage:
-            return SearchBar('书架', PageHelper.pushPage(context, SearchPage()));
-            break;
-          case Page.discoverPage:
-            return SearchBar('发现', PageHelper.pushPage(context, SearchPage()));
-            break;
-          case Page.aboutPage:
-            return AboutBar(PageHelper.pushPage(context, SettingPage()),
-                PageHelper.pushPage(context, ColorLensPage()));
-            break;
-          default:
-            return AppBar(
-              title: Text('oOo'),
-            );
-        }
-      })(),
-      body: (() {
-        switch (_page) {
-          // case Page.shelfPage:
-          //   return ;
-          //   break;
-          case Page.discoverPage:
-            return DiscoverPage();
-            break;
-          case Page.aboutPage:
-            return AboutPage();
-            break;
-          default:
-            return ErrorPage('这页未写 $_page');
-        }
-      })(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_books),
-            title: Text('主页'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.satellite),
-            title: Text('发现'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info_outline),
-            title: Text('关于'),
-          ),
-        ],
-        currentIndex: _page.index,
-        onTap: (index) {
-          setState(() {
-            _page = Page.values[index];
-          });
-        },
-      ),
+      body: Config.option[Config.isSlidingNavigationBar]
+          ? TabBarView(
+              controller: _tabcontroller,
+              children: pages,
+            )
+          : pages[_currentIndex],
+      bottomNavigationBar: Config.option[Config.isSlidingNavigationBar]
+          ? new Material(
+              child: TabBar(
+                controller: _tabcontroller,
+                indicatorColor: Config.primaryColor,
+                labelColor: Config.primaryColor,
+                unselectedLabelColor: Colors.black87,
+                tabs: navigationItems
+                    .map(
+                        (item) => Tab(text: item[text], icon: Icon(item[icon])))
+                    .toList(),
+              ),
+            )
+          : BottomNavigationBar(
+              items: navigationItems
+                  .map((item) => BottomNavigationBarItem(
+                      title: Text(item[text]), icon: Icon(item[icon])))
+                  .toList(),
+              currentIndex: _currentIndex,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
     );
   }
 }
