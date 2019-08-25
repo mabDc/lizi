@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:lizi/global/config.dart';
 import 'package:lizi/pages/home_page.dart';
 
-void main(){
+void main() async{
   
   Config();
-  Config().init();
+  await Config().init();
   
   runApp(MaterialApp(
       title: '栗子',

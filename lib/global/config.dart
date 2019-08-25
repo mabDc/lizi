@@ -55,21 +55,25 @@ class Config {
     themeIndex: 0,
   };
   static List<dynamic> history = <dynamic>[];
-  static Color primaryColor = themeList[option[themeIndex]];
-  void init() async {
+  static Color primaryColor = themeList[0];
+  Future<void> init() async { 
     _localPath = await _getLocalPath();
     try {
       String optionString = await _getConfig(_optionFile);
       option = jsonDecode(optionString) as Map<String, dynamic>;
+      primaryColor = themeList[option[themeIndex]];
     } catch (e) {
       print(e.toString()); 
     }
+    
     try {
       String historyString = await _getConfig(this._historyFile);
       history = jsonDecode(historyString) as List<dynamic>;
     } catch (e) {
       print(e.toString()); 
     }
+
+    return;
   }
 
   Future<void> changeOption(item, value) {

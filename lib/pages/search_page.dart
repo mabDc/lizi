@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:lizi/global/config.dart';
 import 'package:lizi/pages/discover_show_page.dart';
 import 'package:lizi/ui/text_with_theme.dart';
+import 'package:lizi/source/search_u17.dart';
 import 'package:lizi/utils/page_helper.dart';
 
 class SearchPage extends StatefulWidget {
@@ -38,8 +39,8 @@ class SearchPageState extends State<SearchPage> {
       if (keyword.contains(realKeyword)) {
         history.add(ListTile(
           title: Text(keyword),
-          onTap:
-              PageHelper.pushPage(context, DiscoverShowPage('搜索结果 - $keyword')),
+          onTap: () => SearchU17().search(context, keyword),
+          //PageHelper.pushPage(context, DiscoverShowPage('搜索结果 - $keyword')),
         ));
       }
     }
@@ -56,16 +57,19 @@ class SearchPageState extends State<SearchPage> {
           decoration: InputDecoration(
               hintText: '搜索名称或作者', suffixIcon: Icon(Icons.search)),
           onSubmitted: (keyword) {
+            keyword = keyword.trim();
             if (!Config.history.contains(keyword)) {
               Config.history.add(keyword);
               Config().changeHistory();
             }
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    DiscoverShowPage('搜索结果 - $keyword')));
+            // Navigator.of(context).push(MaterialPageRoute(
+            //     builder: (BuildContext context) =>
+            //         DiscoverShowPage('搜索结果 - $keyword')));
+            SearchU17().search(context, keyword);
           },
           onChanged: (keyword) {
             setState(() {
+              keyword = keyword.trim();
               realKeyword = keyword;
             });
           },

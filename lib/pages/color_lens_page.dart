@@ -21,7 +21,10 @@ class ColorLensPageState extends State<ColorLensPage> {
             color: Config.themeList[i],
           ),
           title: Text(Config.themeList[i].toString()),
-          onTap: () => print('color change ${Config.themeList[i]}'),
+          onTap: () => setState((){
+            Config().changeOption(Config.themeIndex, i);
+            Config.primaryColor = Config.themeList[i];
+          }),
         ),
       );
     }
