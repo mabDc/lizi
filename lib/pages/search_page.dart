@@ -104,7 +104,7 @@ class SearchPageState extends State<SearchPage> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.exposure_zero),
+            icon: Icon(Icons.playlist_play),
             tooltip: 'zzzfun',
             onPressed: () => SearchZZZFun().search(context, realKeyword),
           ),

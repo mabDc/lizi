@@ -1,30 +1,105 @@
-// import 'package:flutter/material.dart';
-// import 'package:chewie/chewie.dart';
-// import 'package:video_player/video_player.dart';
+import 'package:flutter/material.dart';
+import 'package:chewie/chewie.dart';
+import 'package:lizi/source/parse_zzzfun.dart';
+import 'package:lizi/ui/text_with_theme.dart';
+import 'package:video_player/video_player.dart';
 
-// class VideoPlayPage extends StatefulWidget {
-//   VideoPlayPage();
-//   @override
-//   VideoPlayPageState createState() => VideoPlayPageState();
-// }
+class VideoPlayPage extends StatefulWidget {
+  final dynamic _item;
+  final String _html;
+  VideoPlayPage(this._item, this._html);
+  @override
+  VideoPlayPageState createState() => VideoPlayPageState();
+}
 
-// class VideoPlayPageState extends State<VideoPlayPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final videoPlayerController = VideoPlayerController.network(
-//         'https://www.runoob.com/try/demo_source/movie.mp4');
+class VideoPlayPageState extends State<VideoPlayPage> {
+  VideoPlayerController _videoPlayerController;
+  List<Widget> _list = <Widget>[];
+  String _name;
+  String _url;
 
-//     final chewieController = ChewieController(
-//       videoPlayerController: videoPlayerController,
-//       aspectRatio: 3 / 2,
-//       autoPlay: true,
-//       looping: true,
-//     );
-//     return Scaffold(
-//       appBar: AppBar(title: Text('data'),),
-//       body: Chewie(
-//         controller: chewieController,
-//       ),
-//     );
-//   }
-// }
+  @override
+  void dispose() {
+    if(_videoPlayerController!=null){
+      _videoPlayerController.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_url != null) {
+      _videoPlayerController = VideoPlayerController.network(_url);
+    }
+
+    if (_name == null) {
+      final item = widget._item;
+      _name = item["name"];
+      String info = '';
+      (item["info"] as Map<String, String>)
+          .forEach((key, value) => info += '$key：$value\n');
+      _list = <Widget>[
+        Container(
+          height: 200,
+          child: Image.network(item["img"]),
+        ),
+        ListTile(
+          title: TextWithTheme('介绍'),
+        ),
+        Divider(),
+        ListTile(
+          title: Text(
+            '$info\n${item["juqing"].replaceAll('\n', '\n　　')}',
+            style: TextStyle(
+              height: 1.4,
+            ),
+          ),
+        ),
+        Divider(),
+        ListTile(title: TextWithTheme('目录')),
+      ];
+      ParseZZZFun.chapter(widget._html).forEach((roads) {
+        _list.add(ListTile(
+          title: TextWithTheme(roads["name"]),
+          subtitle: Text('共${roads["chapter"].length}话'),
+        ));
+        _list.addAll((roads["chapter"] as List).map((chapter) {
+          return ListTile(
+            title: Text(chapter["name"]),
+            onTap: () {
+              setState(() {
+                _name = chapter["name"];
+                _url = ParseZZZFun.video(chapter["url"]);
+              });
+            },
+          );
+        }).toList());
+        _list.add(Divider());
+      });
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_name),
+      ),
+      body: Column(
+        children: <Widget>[
+          _videoPlayerController == null
+              ? Container()
+              : Chewie(
+                  controller: ChewieController(
+                  videoPlayerController: _videoPlayerController,
+                  aspectRatio: 16 / 9,
+                  autoPlay: true,
+                  looping: true,
+                )),
+          Padding(
+            padding: EdgeInsets.only(bottom: 2.0),
+          ),
+          Expanded(
+            child: ListView(children: _list),
+          ),
+        ],
+      ),
+    );
+  }
+}

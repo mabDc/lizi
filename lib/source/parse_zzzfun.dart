@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:html/parser.dart' show parse;
 
 class ParseZZZFun {
@@ -64,8 +62,15 @@ class ParseZZZFun {
     return list;
   }
 
-  static dynamic video(String html){
-    final json = parse(html).querySelector('#bofang_box script').innerHtml.substring(16);
-    return jsonDecode(json);
+  static dynamic video(String url) {
+    //url = '/vod-play-id-513-sid-2-nid-1.html';
+    RegExpMatch regExpMatch = RegExp(
+            '/vod-play-id-(?<vid>\\d+)-sid-(?<sid>\\d+)-nid-(?<nid>\\d+)\\.html')
+        .firstMatch(url);
+    String sid = regExpMatch.namedGroup('sid');
+    if (sid == '1') {
+      sid = '';
+    }
+    return 'http://111.230.89.165:8089/zapi/play$sid.php?url=${regExpMatch.namedGroup('vid')}-${regExpMatch.namedGroup('nid')}';
   }
 }
