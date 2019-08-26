@@ -4,7 +4,6 @@ import 'package:lizi/ui/color_circle.dart';
 import 'package:lizi/ui/text_with_theme.dart';
 
 class ColorLensPage extends StatefulWidget {
-  ColorLensPage();
   @override
   State createState() => ColorLensPageState();
 }

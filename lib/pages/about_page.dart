@@ -6,7 +6,6 @@ import 'package:lizi/ui/about_bar.dart';
 import 'package:lizi/utils/page_helper.dart';
 
 class AboutPage extends StatelessWidget {
-  AboutPage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

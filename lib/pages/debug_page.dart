@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class DebugPage extends StatefulWidget {
-  DebugPage();
-
   @override
   DebugPageState createState() => DebugPageState();
 }

@@ -7,7 +7,6 @@ import 'package:lizi/ui/search_bar.dart';
 import 'package:lizi/utils/page_helper.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage();
   @override
   State createState() => HomePageState();
 }
