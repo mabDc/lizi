@@ -14,16 +14,17 @@ class VideoPlayPage extends StatefulWidget {
 
 class VideoPlayPageState extends State<VideoPlayPage> {
   VideoPlayerController _videoPlayerController;
-  List<Widget> _list = <Widget>[];
+  List<Widget> _chapter = <Widget>[];
+  List<Widget> _info = <Widget>[];
   String _name;
   String _url;
 
   @override
   void dispose() {
-    super.dispose();
     if (_videoPlayerController != null) {
       _videoPlayerController.dispose();
     }
+    super.dispose();
   }
 
   @override
@@ -34,9 +35,10 @@ class VideoPlayPageState extends State<VideoPlayPage> {
 
     if (_name == null) {
       _name = widget._item["name"];
-      _list = listBuild(widget._item);
+      _chapter = chapterBuild(widget._item);
+      _info = infoBuild(widget._item);
     }
-
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(_name),
@@ -53,25 +55,38 @@ class VideoPlayPageState extends State<VideoPlayPage> {
                   looping: true,
                 )),
           Padding(padding: EdgeInsets.only(bottom: 2.0)),
-          Expanded(child: ListView(children: _list)),
+          Expanded(
+            child: ListView(
+                children: _videoPlayerController == null
+                    ? (List.from(_info)..addAll(List.from(_chapter)))
+                    : (List.from(_chapter)..addAll(List.from(_info)))),
+          ),
         ],
       ),
     );
   }
 
-  List<Widget> listBuild(dynamic item) {
+  List<Widget> infoBuild(dynamic item) {
     String info = '';
     (item["info"] as Map<String, String>)
         .forEach((key, value) => info += '$key：$value\n');
-    final list = <Widget>[
+    return <Widget>[
       Container(
-        height: 200,
+        height: 320,
         child: Image.network(item["img"]),
       ),
+      Text(
+        item["name"],
+        style: TextStyle(
+          height: 2,
+          fontSize: 22,
+        ),
+        textAlign: TextAlign.center,
+      ),
+      Divider(),
       ListTile(
         title: TextWithTheme('介绍'),
       ),
-      Divider(),
       ListTile(
         title: Text(
           '$info\n${item["juqing"].replaceAll('\n', '\n　　')}',
@@ -81,8 +96,11 @@ class VideoPlayPageState extends State<VideoPlayPage> {
         ),
       ),
       Divider(),
-      ListTile(title: TextWithTheme('目录')),
     ];
+  }
+
+  List<Widget> chapterBuild(dynamic item) {
+    final list = <Widget>[];
     ParseZZZFun.chapter(widget._html).forEach((roads) {
       list.add(ListTile(
         title: TextWithTheme(roads["name"]),
@@ -101,6 +119,7 @@ class VideoPlayPageState extends State<VideoPlayPage> {
       }).toList());
       list.add(Divider());
     });
+    list.addAll(<Widget>[]);
     return list;
   }
 }
