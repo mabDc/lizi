@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lizi/source/parse_zzzfun.dart';
 import 'package:lizi/ui/text_with_theme.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class SearchZZZFun {
   final host = 'http://www.zzzfun.com';
@@ -126,17 +125,19 @@ class SearchZZZFun {
     //     "weight": 435
     //   };
     // });
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(title: Text(name)),
-        body: WebView(
-          initialUrl: '$host$url',
-          onWebViewCreated: (web){
-            web.loadUrl(url);
-          },
-        ),
-      );
-    }));
+
+    
+    // Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+    //   return Scaffold(
+    //     appBar: AppBar(title: Text(name)),
+    //     body: WebView(
+    //       initialUrl: '$host$url',
+    //       onWebViewCreated: (web){
+    //         web.loadUrl(url);
+    //       },
+    //     ),
+    //   );
+    // }));
   }
 }
 

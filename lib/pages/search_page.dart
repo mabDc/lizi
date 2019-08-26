@@ -86,8 +86,7 @@ class SearchPageState extends State<SearchPage> {
         title: TextField(
           autofocus: true,
           textInputAction: TextInputAction.search,
-          decoration: InputDecoration(
-              hintText: '搜索名称或作者', suffixIcon: Icon(Icons.search)),
+          decoration: InputDecoration(hintText: '搜索名称或作者'),
           onSubmitted: (keyword) async {
             keyword = keyword.trim();
             if (!Config.history.contains(keyword)) {
@@ -105,8 +104,8 @@ class SearchPageState extends State<SearchPage> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.ac_unit),
-            tooltip: '测试zzzfun',
+            icon: Icon(Icons.exposure_zero),
+            tooltip: 'zzzfun',
             onPressed: () => SearchZZZFun().search(context, realKeyword),
           ),
         ],

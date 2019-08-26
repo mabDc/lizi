@@ -60,7 +60,7 @@ class HomePageState extends State<HomePage>
                   controller: _tabcontroller,
                   indicatorColor: Config.primaryColor,
                   labelColor: Config.primaryColor,
-                  unselectedLabelColor: Colors.black87,
+                  unselectedLabelColor: Colors.black54,
                   tabs: navigationItems
                       .map((item) =>
                           Tab(text: item[text], icon: Icon(item[icon])))
