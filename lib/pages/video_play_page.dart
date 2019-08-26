@@ -20,10 +20,10 @@ class VideoPlayPageState extends State<VideoPlayPage> {
 
   @override
   void dispose() {
-    if(_videoPlayerController!=null){
+    super.dispose();
+    if (_videoPlayerController != null) {
       _videoPlayerController.dispose();
     }
-    super.dispose();
   }
 
   @override
@@ -33,50 +33,10 @@ class VideoPlayPageState extends State<VideoPlayPage> {
     }
 
     if (_name == null) {
-      final item = widget._item;
-      _name = item["name"];
-      String info = '';
-      (item["info"] as Map<String, String>)
-          .forEach((key, value) => info += '$key：$value\n');
-      _list = <Widget>[
-        Container(
-          height: 200,
-          child: Image.network(item["img"]),
-        ),
-        ListTile(
-          title: TextWithTheme('介绍'),
-        ),
-        Divider(),
-        ListTile(
-          title: Text(
-            '$info\n${item["juqing"].replaceAll('\n', '\n　　')}',
-            style: TextStyle(
-              height: 1.4,
-            ),
-          ),
-        ),
-        Divider(),
-        ListTile(title: TextWithTheme('目录')),
-      ];
-      ParseZZZFun.chapter(widget._html).forEach((roads) {
-        _list.add(ListTile(
-          title: TextWithTheme(roads["name"]),
-          subtitle: Text('共${roads["chapter"].length}话'),
-        ));
-        _list.addAll((roads["chapter"] as List).map((chapter) {
-          return ListTile(
-            title: Text(chapter["name"]),
-            onTap: () {
-              setState(() {
-                _name = chapter["name"];
-                _url = ParseZZZFun.video(chapter["url"]);
-              });
-            },
-          );
-        }).toList());
-        _list.add(Divider());
-      });
+      _name = widget._item["name"];
+      _list = listBuild(widget._item);
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_name),
@@ -92,14 +52,55 @@ class VideoPlayPageState extends State<VideoPlayPage> {
                   autoPlay: true,
                   looping: true,
                 )),
-          Padding(
-            padding: EdgeInsets.only(bottom: 2.0),
-          ),
-          Expanded(
-            child: ListView(children: _list),
-          ),
+          Padding(padding: EdgeInsets.only(bottom: 2.0)),
+          Expanded(child: ListView(children: _list)),
         ],
       ),
     );
+  }
+
+  List<Widget> listBuild(dynamic item) {
+    String info = '';
+    (item["info"] as Map<String, String>)
+        .forEach((key, value) => info += '$key：$value\n');
+    final list = <Widget>[
+      Container(
+        height: 200,
+        child: Image.network(item["img"]),
+      ),
+      ListTile(
+        title: TextWithTheme('介绍'),
+      ),
+      Divider(),
+      ListTile(
+        title: Text(
+          '$info\n${item["juqing"].replaceAll('\n', '\n　　')}',
+          style: TextStyle(
+            height: 1.4,
+          ),
+        ),
+      ),
+      Divider(),
+      ListTile(title: TextWithTheme('目录')),
+    ];
+    ParseZZZFun.chapter(widget._html).forEach((roads) {
+      list.add(ListTile(
+        title: TextWithTheme(roads["name"]),
+        subtitle: Text('共${roads["chapter"].length}话'),
+      ));
+      list.addAll((roads["chapter"] as List).map((chapter) {
+        return ListTile(
+          title: Text(chapter["name"]),
+          onTap: () {
+            setState(() {
+              _name = chapter["name"];
+              _url = ParseZZZFun.video(chapter["url"]);
+            });
+          },
+        );
+      }).toList());
+      list.add(Divider());
+    });
+    return list;
   }
 }
