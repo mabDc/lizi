@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lizi/global/config.dart';
+import 'package:lizi/source/search_zzzfun.dart';
 import 'package:lizi/ui/text_with_theme.dart';
 import 'package:lizi/source/search_u17.dart';
 
@@ -30,24 +31,48 @@ class SearchPageState extends State<SearchPage> {
       ));
     }
 
-    final history = <Widget>[];
+    final searchHelp = <Widget>[];
+    searchHelp.addAll(<Widget>[
+      ListTile(
+        title: TextWithTheme('搜索选项'),
+        trailing: IconButton(
+          icon: Icon(Icons.help),
+          tooltip: '说明',
+          onPressed: () => print('press search help'),
+        ),
+      ),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: searchTypes),
+      Divider(),
+      ListTile(
+        title: TextWithTheme('搜索历史'),
+        trailing: IconButton(
+          icon: Icon(Icons.delete),
+          tooltip: '清空历史',
+          onPressed: () async {
+            Config.history.clear();
+            await Config().changeHistory();
+            setState(() {});
+          },
+        ),
+      ),
+    ]);
     for (int i = 0; i < Config.history.length; ++i) {
       String keyword = Config.history[i];
       if (keyword.contains(realKeyword)) {
-        history.add(ListTile(
-          title: Text(keyword),
-          trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () async {
-              Config.history.remove(keyword);
-              await Config().changeHistory();
-              setState(() {});
-            },
-          ),
-          onTap: () => SearchU17().search(context, keyword),
-          //PageHelper.pushPage(context, DiscoverShowPage('搜索结果 - $keyword')),
-        ));
-        history.add(Divider());
+        searchHelp.add(
+          ListTile(
+              title: Text(keyword),
+              trailing: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () async {
+                  Config.history.remove(keyword);
+                  await Config().changeHistory();
+                  setState(() {});
+                },
+              ),
+              onTap: () => SearchU17().search(context, keyword)),
+        );
+        searchHelp.add(Divider());
       }
     }
 
@@ -60,6 +85,7 @@ class SearchPageState extends State<SearchPage> {
         textTheme: _themeData.textTheme,
         title: TextField(
           autofocus: true,
+          textInputAction: TextInputAction.search,
           decoration: InputDecoration(
               hintText: '搜索名称或作者', suffixIcon: Icon(Icons.search)),
           onSubmitted: (keyword) async {
@@ -68,9 +94,6 @@ class SearchPageState extends State<SearchPage> {
               Config.history.add(keyword);
               await Config().changeHistory();
             }
-            // Navigator.of(context).push(MaterialPageRoute(
-            //     builder: (BuildContext context) =>
-            //         DiscoverShowPage('搜索结果 - $keyword')));
             SearchU17().search(context, keyword);
           },
           onChanged: (keyword) {
@@ -82,32 +105,15 @@ class SearchPageState extends State<SearchPage> {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () => print('search more'),
+            icon: Icon(Icons.ac_unit),
+            tooltip: '测试zzzfun',
+            onPressed: () => SearchZZZFun().search(context, realKeyword),
           ),
         ],
       ),
       body: Center(
         child: ListView(
-          children: <Widget>[
-            ListTile(title: TextWithTheme('搜索选项')),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: searchTypes),
-            Divider(),
-            ListTile(
-              title: TextWithTheme('搜索历史'),
-              trailing: IconButton(
-                icon: Icon(Icons.delete),
-                tooltip: '清空历史',
-                onPressed: () async  {
-                  Config.history.clear();
-                  await  Config().changeHistory();
-                  setState(() {});
-                },
-              ),
-            ),
-          ]..addAll(history),
+          children: searchHelp,
         ),
       ),
     );

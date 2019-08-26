@@ -50,13 +50,14 @@ class Config {
     isAutoRefresh: false,
     isFullScreen: true,
     isVolumeControl: false,
-    isFlippingAnimation: true,
+    isFlippingAnimation: false,
     isSlidingNavigationBar: true,
     searchTypeIndex: 1,
     themeIndex: 0,
   };
   static List<dynamic> history = <dynamic>[];
   static Color primaryColor = themeList[0];
+  static dynamic setTheme;
   Future<void> init() async { 
     _localPath = await _getLocalPath();
     try {

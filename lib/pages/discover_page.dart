@@ -11,7 +11,7 @@ class DiscoverPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final somthingList = <Widget>[];
-    Iterable<int>.generate(1000).forEach((i) {
+    Iterable<int>.generate(30).forEach((i) {
       somthingList.add(Divider());
       somthingList.add(ListTile(title: Text(i.toString())));
     });

@@ -14,12 +14,14 @@ class AboutBar extends AppBar {
           icon: Icon(
             Icons.color_lens,
           ),
+          tooltip: '调色版',
           onPressed: _colorLens,
         ),
         IconButton(
           icon: Icon(
             Icons.settings,
           ),
+          tooltip: '设置',
           onPressed: _settings,
         ),
       ];

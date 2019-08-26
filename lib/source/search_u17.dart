@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:lizi/global/config.dart';
 
 class SearchU17 {
-  void search(BuildContext context, String search) {
+  void search(BuildContext context, String keyword, {int page = 1}) {
     http
         .get(
-            'http://app.u17.com/v3/appV3_3/android/phone/search/searchResult?q=$search')
+            'http://app.u17.com/v3/appV3_3/android/phone/search/searchResult?q=$keyword')
         .then((response) {
       final json = jsonDecode(response.body);
       var list = <Widget>[];
@@ -33,7 +33,7 @@ class SearchU17 {
           MaterialPageRoute(builder: (BuildContext context) {
         return Page(
             AppBar(
-              title: Text('搜索结果 - $search'),
+              title: Text('搜索结果 - $keyword'),
             ),
             ListView(children: list));
       }));

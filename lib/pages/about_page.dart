@@ -6,6 +6,7 @@ import 'package:lizi/ui/about_bar.dart';
 import 'package:lizi/utils/page_helper.dart';
 
 class AboutPage extends StatelessWidget {
+  AboutPage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,11 +16,11 @@ class AboutPage extends StatelessWidget {
         children: <Widget>[
           Container(
             color: Config.primaryColor,
-            height: 280.0,
+            height: 260.0,
             child: Center(
               child: ListTile(
                 title: Text(
-                  '栗子',
+                  '亦搜',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 120.0,
@@ -28,26 +29,26 @@ class AboutPage extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  'version 1.0.0.0',
+                  'version 1.0.0',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 22.0,
-                    height: 2,
+                    height: 1.6,
                     color: Colors.white,
                   ),
                 ),
                 onTap: () => showAboutDialog(
                   context: context,
-                  applicationVersion: '1.0.0.0',
+                  applicationVersion: '1.0.0',
                   children: <Widget>[
                     ListTile(
                       title: Text('2019/08/24'),
-                      subtitle: Text('bata 2\nbata 1'),
+                      subtitle: Text('bata 1'),
                     ),
                     Divider(),
                     ListTile(
                       title: Text('2019/08/24'),
-                      subtitle: Text('alpha 2\nalpha 1'),
+                      subtitle: Text('alpha 1'),
                     ),
                   ],
                 ),
@@ -86,9 +87,9 @@ class AboutPage extends StatelessWidget {
           Divider(),
           ListTile(
             title: Text(
-              '信息统计',
+              '调试信息',
             ),
-            onTap: () => print('tap data statics'),
+            onTap: () => print('tap debug info'),
           ),
           Divider(),
         ],

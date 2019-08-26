@@ -7,6 +7,7 @@ import 'package:lizi/ui/search_bar.dart';
 import 'package:lizi/utils/page_helper.dart';
 
 class HomePage extends StatefulWidget {
+  HomePage();
   @override
   State createState() => HomePageState();
 }
@@ -30,7 +31,6 @@ class HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    
     final text = "text";
     final icon = "icon";
     final navigationItems = [
@@ -40,43 +40,45 @@ class HomePageState extends State<HomePage>
     ];
 
     List<Widget> pages = <Widget>[
-      Scaffold(appBar: SearchBar('书架', PageHelper.pushPage(context, SearchPage())),),
+      Scaffold(
+        appBar: SearchBar('书架', PageHelper.pushPage(context, SearchPage())),
+      ),
       DiscoverPage(),
       AboutPage(),
     ];
 
     return Scaffold(
-      body: Config.option[Config.isSlidingNavigationBar]
-          ? TabBarView(
-              controller: _tabcontroller,
-              children: pages,
-            )
-          : pages[_currentIndex],
-      bottomNavigationBar: Config.option[Config.isSlidingNavigationBar]
-          ? new Material(
-              child: TabBar(
+        body: Config.option[Config.isSlidingNavigationBar]
+            ? TabBarView(
                 controller: _tabcontroller,
-                indicatorColor: Config.primaryColor,
-                labelColor: Config.primaryColor,
-                unselectedLabelColor: Colors.black87,
-                tabs: navigationItems
-                    .map(
-                        (item) => Tab(text: item[text], icon: Icon(item[icon])))
+                children: pages,
+              )
+            : pages[_currentIndex],
+        bottomNavigationBar: Config.option[Config.isSlidingNavigationBar]
+            ? new Material(
+                child: TabBar(
+                  controller: _tabcontroller,
+                  indicatorColor: Config.primaryColor,
+                  labelColor: Config.primaryColor,
+                  unselectedLabelColor: Colors.black87,
+                  tabs: navigationItems
+                      .map((item) =>
+                          Tab(text: item[text], icon: Icon(item[icon])))
+                      .toList(),
+                ),
+              )
+            : BottomNavigationBar(
+                items: navigationItems
+                    .map((item) => BottomNavigationBarItem(
+                        title: Text(item[text]), icon: Icon(item[icon])))
                     .toList(),
+                currentIndex: _currentIndex,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
               ),
-            )
-          : BottomNavigationBar(
-              items: navigationItems
-                  .map((item) => BottomNavigationBarItem(
-                      title: Text(item[text]), icon: Icon(item[icon])))
-                  .toList(),
-              currentIndex: _currentIndex,
-              onTap: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
-            ),
     );
   }
 }
