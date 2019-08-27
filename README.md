@@ -18,4 +18,4 @@ samples, guidance on mobile development, and a full API reference.
 
 # 捐赠
 
-![支付宝](支付宝.png)
+![支付宝](/支付宝.png)
