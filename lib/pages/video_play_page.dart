@@ -30,6 +30,10 @@ class VideoPlayPageState extends State<VideoPlayPage> {
   @override
   Widget build(BuildContext context) {
     if (_url != null) {
+      if (_videoPlayerController != null &&
+          _videoPlayerController.dataSource != _url) {
+        _videoPlayerController.dispose();
+      }
       _videoPlayerController = VideoPlayerController.network(_url);
     }
 
@@ -37,15 +41,16 @@ class VideoPlayPageState extends State<VideoPlayPage> {
       _name = widget._item["name"];
       _chapter = chapterBuild(widget._item);
       _info = infoBuild(widget._item);
+      _info.addAll(_chapter);
     }
-    
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_name),
       ),
       body: Column(
         children: <Widget>[
-          _videoPlayerController == null
+          _url == null
               ? Container()
               : Chewie(
                   controller: ChewieController(
@@ -55,12 +60,7 @@ class VideoPlayPageState extends State<VideoPlayPage> {
                   looping: true,
                 )),
           Padding(padding: EdgeInsets.only(bottom: 2.0)),
-          Expanded(
-            child: ListView(
-                children: _videoPlayerController == null
-                    ? (List.from(_info)..addAll(List.from(_chapter)))
-                    : (List.from(_chapter)..addAll(List.from(_info)))),
-          ),
+          Expanded(child: ListView(children: _info)),
         ],
       ),
     );
@@ -79,7 +79,7 @@ class VideoPlayPageState extends State<VideoPlayPage> {
         item["name"],
         style: TextStyle(
           height: 2,
-          fontSize: 22,
+          fontSize: 20,
         ),
         textAlign: TextAlign.center,
       ),
