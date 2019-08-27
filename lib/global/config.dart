@@ -12,7 +12,7 @@ class Config {
   Config._internal();
 
   String _localPath;
-  String _optionFile = 'optionV2.json';
+  String _optionFile = 'optionV3.json';
   String _historyFile = 'history.json';
 
   static const isFullScreen = 'isFullScreen';
@@ -23,9 +23,11 @@ class Config {
   static const isBrightnessDark = 'isBrightnessDark';
   static const searchTypeIndex = 'searchTypeIndex';
   static const themeIndex = 'themeIndex';
+  static const optionVersion = 'themeIndex';
 
   static const searchTypeList = ['模糊', '准确', '精确'];
   static Map<String, dynamic> option = {
+    optionVersion: 1,
     isAutoRefresh: false,
     isFullScreen: true,
     isVolumeControl: false,
