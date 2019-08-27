@@ -79,7 +79,7 @@ class VideoPlayPageState extends State<VideoPlayPage> {
         item["name"],
         style: TextStyle(
           height: 2,
-          fontSize: 20,
+          fontSize: 18,
         ),
         textAlign: TextAlign.center,
       ),
