@@ -58,7 +58,7 @@ class VideoPlayPageForZhuziState extends State<VideoPlayPageForZhuzi>
         children: <Widget>[
           _url == null
               ? Container(
-                  height: 250,
+                  height: 220,
                   color: Config.primaryColor.withOpacity(0.1),
                 )
               : Chewie(
@@ -68,27 +68,21 @@ class VideoPlayPageForZhuziState extends State<VideoPlayPageForZhuzi>
                   autoPlay: true,
                   looping: true,
                 )),
+          TabBar(
+            controller: _tabcontroller,
+            indicatorColor: Config.primaryColor,
+            labelColor: Config.primaryColor,
+            unselectedLabelColor: Colors.black,
+            tabs: <Tab>[
+              Tab(text: '选集'),
+              Tab(text: '详情'),
+            ],
+          ),
           Expanded(
-            child: Scaffold(
-              bottomNavigationBar: TabBar(
-                controller: _tabcontroller,
-                indicatorColor: Config.primaryColor,
-                labelColor: Config.primaryColor,
-                unselectedLabelColor: Colors.black,
-                tabs: <Tab>[
-                  Tab(
-                    text: '选集',
-                  ),
-                  Tab(
-                    text: '详情',
-                  ),
-                ],
-              ),
-              body: TabBarView(controller: _tabcontroller, children: <Widget>[
-                ListView(children: _chapter),
-                ListView(children: _info),
-              ]),
-            ),
+            child: TabBarView(controller: _tabcontroller, children: <Widget>[
+              ListView(children: _chapter),
+              ListView(children: _info),
+            ]),
           ),
         ],
       ),
@@ -100,14 +94,12 @@ class VideoPlayPageForZhuziState extends State<VideoPlayPageForZhuzi>
     (item["info"] as Map<String, String>)
         .forEach((key, value) => info += '$key：$value\n');
     return <Widget>[
-      ListTile(title: TextWithTheme('介绍')),
-      Divider(),
       ListTile(
         title: Text(
           item["name"],
           style: TextStyle(
             height: 2,
-            fontSize: 18,
+            fontSize: 20,
           ),
         ),
       ),
