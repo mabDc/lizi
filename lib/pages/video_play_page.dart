@@ -29,19 +29,20 @@ class VideoPlayPageState extends State<VideoPlayPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_url != null) {
-      if (_videoPlayerController != null &&
-          _videoPlayerController.dataSource != _url) {
-        _videoPlayerController.dispose();
-      }
-      _videoPlayerController = VideoPlayerController.network(_url);
-    }
-
     if (_name == null) {
       _name = widget._item["name"];
-      _chapter = chapterBuild(widget._item);
       _info = infoBuild(widget._item);
+      _chapter = chapterBuild(widget._item);
       _info.addAll(_chapter);
+    }
+
+    if (_url != null) {
+      if(_videoPlayerController == null){
+        _videoPlayerController = VideoPlayerController.network(_url);
+      } else if(_videoPlayerController.dataSource != _url){
+        _videoPlayerController.dispose();
+        _videoPlayerController = VideoPlayerController.network(_url);
+      }
     }
 
     return Scaffold(
