@@ -54,7 +54,7 @@ class HomePageState extends State<HomePage>
               )
             : pages[_currentIndex],
         bottomNavigationBar: Config.option[Config.isSlidingNavigationBar]
-            ? new Material(
+            ? Material(
                 child: TabBar(
                   controller: _tabcontroller,
                   indicatorColor: Config.primaryColor,

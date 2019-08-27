@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:lizi/pages/video_play_page.dart';
+import 'package:lizi/pages/video_play_page_for_zhuzi.dart';
 import 'package:lizi/source/parse_zzzfun.dart';
 
 class SearchZZZFun {
@@ -40,7 +40,7 @@ class SearchZZZFun {
     http.get('$host${item["url"]}').then((response) {
       Navigator.push(context,
           MaterialPageRoute(builder: (BuildContext context) {
-        return VideoPlayPage(item, response.body);
+        return VideoPlayPageForZhuzi(item, response.body);
       }));
     });
   }
