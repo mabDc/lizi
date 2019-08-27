@@ -18,7 +18,7 @@ class SearchZZZFun {
             '\n' + item["info"]["主演"],
             maxLines: 2,
           ),
-          trailing: Text('${item["info"]["地区"]}\n${item["info"]["年份"]}'),
+          trailing: Text('${item["info"]["年份"]}\n\n${item["info"]["地区"]}'),
           isThreeLine: true,
           onTap: () {
             chapter(context, item);

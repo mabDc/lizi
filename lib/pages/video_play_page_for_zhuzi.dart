@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
-import 'package:lizi/global/config.dart';
 import 'package:lizi/source/parse_zzzfun.dart';
 import 'package:lizi/ui/text_with_theme.dart';
 import 'package:video_player/video_player.dart';
@@ -51,15 +50,13 @@ class VideoPlayPageForZhuziState extends State<VideoPlayPageForZhuzi>
       }
     }
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_name),
-      ),
+      appBar: AppBar(title: Text(_name)),
       body: Column(
         children: <Widget>[
           _url == null
               ? Container(
                   height: 220,
-                  color: Config.primaryColor.withOpacity(0.1),
+                  color: Theme.of(context).primaryColor.withOpacity(0.1),
                 )
               : Chewie(
                   controller: ChewieController(
@@ -68,16 +65,24 @@ class VideoPlayPageForZhuziState extends State<VideoPlayPageForZhuzi>
                   autoPlay: true,
                   looping: true,
                 )),
-          TabBar(
-            controller: _tabcontroller,
-            indicatorColor: Config.primaryColor,
-            labelColor: Config.primaryColor,
-            unselectedLabelColor: Colors.black,
-            tabs: <Tab>[
+                Material(
+              color: Theme.of(context).primaryColor,
+              child: TabBar(
+                controller: _tabcontroller,
+                indicatorColor: Theme.of(context).primaryTextTheme.title.color,
+                labelColor: Theme.of(context).primaryTextTheme.title.color,
+                unselectedLabelColor: Theme.of(context)
+                    .primaryTextTheme
+                    .title
+                    .color
+                    .withOpacity(0.75),
+                tabs: <Tab>[
               Tab(text: '选集'),
               Tab(text: '详情'),
             ],
-          ),
+              ),
+            )
+          ,
           Expanded(
             child: TabBarView(controller: _tabcontroller, children: <Widget>[
               ListView(children: _chapter),

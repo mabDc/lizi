@@ -13,12 +13,16 @@ class ThemeProxyPageState extends State<ThemeProxyPage> {
     Config.setTheme = setState;
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '亦搜',
-      theme: ThemeData(primaryColor: Config.primaryColor),
+      theme: ThemeData(
+          brightness: Config.option[Config.isBrightnessDark]
+              ? Brightness.dark
+              : Brightness.light,
+          primaryColor: Colors.primaries[Config.option[Config.themeIndex]]),
       home: HomePage(),
     );
   }

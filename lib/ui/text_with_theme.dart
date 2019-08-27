@@ -6,5 +6,5 @@ class TextWithTheme extends Text{
   TextWithTheme(this.title) : super(title);
   
   @override
-  TextStyle get style => TextStyle(color: Config.primaryColor);
+  TextStyle get style => TextStyle(color: Colors.primaries[Config.option[Config.themeIndex]]);
 }

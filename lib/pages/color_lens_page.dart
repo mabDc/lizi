@@ -9,8 +9,6 @@ class ColorLensPage extends StatefulWidget {
 }
 
 class ColorLensPageState extends State<ColorLensPage> {
-  ThemeData _theme =
-      ThemeData(primaryColor: Config.primaryColor); //Theme.of(context);
   Widget build(BuildContext context) {
     final themeList = <Widget>[];
     themeList.add(ListTile(
@@ -21,13 +19,32 @@ class ColorLensPageState extends State<ColorLensPage> {
         onPressed: () => print('press ColorLens help'),
       ),
     ));
-    for (var i = 0; i < Config.themeList.length; i++) {
-      Color color = Config.themeList[i];
+    themeList.add(ListTile(
+      title: Text('夜间模式'),
+      subtitle: Text('黑色背景'),
+      trailing: Switch(
+        value: Config.option[Config.isBrightnessDark],
+        activeColor: Theme.of(context).primaryColor,
+        onChanged: (value) async {
+          await Config().changeOption(Config.isBrightnessDark, value);
+          Config.setTheme(() {});
+          setState(() {});
+        },
+      ),
+      onTap: () async {
+        await Config().changeOption(
+            Config.isBrightnessDark, !Config.option[Config.isBrightnessDark]);
+        Config.setTheme(() {});
+        setState(() {});
+      },
+    ));
+
+    for (var i = 0; i < Colors.primaries.length; i++) {
+      Color color = Colors.primaries[i];
       themeList.add(
         ColorCircle(color.toString(), '', color, onTap: () async {
-          await Config().changeTheme(i);
-          _theme = ThemeData(primaryColor: color);
-          Config.setTheme((){});
+          await Config().changeOption(Config.themeIndex, i);
+          Config.setTheme(() {});
           setState(() {});
         }),
       );
@@ -36,33 +53,33 @@ class ColorLensPageState extends State<ColorLensPage> {
 
     themeList.addAll(<Widget>[
       ListTile(title: TextWithTheme('主题预览')),
-      ColorCircle("主色调", "primaryColor", _theme.primaryColor),
-      Divider(),
-      ListTile(title: TextWithTheme('全部预览')),
-      ColorCircle("突出颜色", "highlightColor", _theme.highlightColor),
-      ColorCircle("提示颜色", "hintColor", _theme.hintColor),
+      ColorCircle("突出颜色", "highlightColor", Theme.of(context).highlightColor),
+      ColorCircle("提示颜色", "hintColor", Theme.of(context).hintColor),
       ColorCircle("文本选择手柄颜色", "textSelectionHandleColor",
-          _theme.textSelectionHandleColor),
-      ColorCircle("文字选择颜色", "textSelectionColor", _theme.textSelectionColor),
-      ColorCircle("背景颜色", "backgroundColor", _theme.backgroundColor),
-      ColorCircle("强调颜色", "accentColor", _theme.accentColor),
-      ColorCircle("画布颜色", "canvasColor", _theme.canvasColor),
-      ColorCircle("卡片颜色", "cardColor", _theme.cardColor),
-      ColorCircle("按钮颜色", "buttonColor", _theme.buttonColor),
+          Theme.of(context).textSelectionHandleColor),
       ColorCircle(
-          "对话框背景颜色", "dialogBackgroundColor", _theme.dialogBackgroundColor),
-      ColorCircle("禁用颜色", "disabledColor", _theme.disabledColor),
-      ColorCircle("分频器颜色", "dividerColor", _theme.dividerColor),
-      ColorCircle("错误颜色", "errorColor", _theme.errorColor),
-      ColorCircle("指示灯颜色", "indicatorColor", _theme.indicatorColor),
-      ColorCircle("原色", "primaryColor", _theme.primaryColor),
+          "文字选择颜色", "textSelectionColor", Theme.of(context).textSelectionColor),
+      ColorCircle("背景颜色", "backgroundColor", Theme.of(context).backgroundColor),
+      ColorCircle("强调颜色", "accentColor", Theme.of(context).accentColor),
+      ColorCircle("画布颜色", "canvasColor", Theme.of(context).canvasColor),
+      ColorCircle("卡片颜色", "cardColor", Theme.of(context).cardColor),
+      ColorCircle("按钮颜色", "buttonColor", Theme.of(context).buttonColor),
+      ColorCircle("对话框背景颜色", "dialogBackgroundColor",
+          Theme.of(context).dialogBackgroundColor),
+      ColorCircle("禁用颜色", "disabledColor", Theme.of(context).disabledColor),
+      ColorCircle("分频器颜色", "dividerColor", Theme.of(context).dividerColor),
+      ColorCircle("错误颜色", "errorColor", Theme.of(context).errorColor),
+      ColorCircle("指示灯颜色", "indicatorColor", Theme.of(context).indicatorColor),
+      ColorCircle("原色", "primaryColor", Theme.of(context).primaryColor),
+      ColorCircle("脚手架背景颜色", "scaffoldBackgroundColor",
+          Theme.of(context).scaffoldBackgroundColor),
+      ColorCircle("次标头颜色", "secondaryHeaderColor",
+          Theme.of(context).secondaryHeaderColor),
       ColorCircle(
-          "脚手架背景颜色", "scaffoldBackgroundColor", _theme.scaffoldBackgroundColor),
-      ColorCircle("次标头颜色", "secondaryHeaderColor", _theme.secondaryHeaderColor),
-      ColorCircle("选择行颜色", "selectedRowColor", _theme.selectedRowColor),
-      ColorCircle("飞溅颜色", "splashColor", _theme.splashColor),
-      ColorCircle(
-          "未选择的控件颜色", "unselectedWidgetColor", _theme.unselectedWidgetColor),
+          "选择行颜色", "selectedRowColor", Theme.of(context).selectedRowColor),
+      ColorCircle("飞溅颜色", "splashColor", Theme.of(context).splashColor),
+      ColorCircle("未选择的控件颜色", "unselectedWidgetColor",
+          Theme.of(context).unselectedWidgetColor),
     ]);
 
     return Scaffold(

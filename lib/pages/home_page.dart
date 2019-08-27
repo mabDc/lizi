@@ -47,37 +47,42 @@ class HomePageState extends State<HomePage>
     ];
 
     return Scaffold(
-        body: Config.option[Config.isSlidingNavigationBar]
-            ? TabBarView(
+      body: Config.option[Config.isSlidingNavigationBar]
+          ? TabBarView(
+              controller: _tabcontroller,
+              children: pages,
+            )
+          : pages[_currentIndex],
+      bottomNavigationBar: Config.option[Config.isSlidingNavigationBar]
+          ? Material(
+              color: Theme.of(context).primaryColor,
+              child: TabBar(
                 controller: _tabcontroller,
-                children: pages,
-              )
-            : pages[_currentIndex],
-        bottomNavigationBar: Config.option[Config.isSlidingNavigationBar]
-            ? Material(
-                child: TabBar(
-                  controller: _tabcontroller,
-                  indicatorColor: Config.primaryColor,
-                  labelColor: Config.primaryColor,
-                  unselectedLabelColor: Colors.black54,
-                  tabs: navigationItems
-                      .map((item) =>
-                          Tab(text: item[text], icon: Icon(item[icon])))
-                      .toList(),
-                ),
-              )
-            : BottomNavigationBar(
-                items: navigationItems
-                    .map((item) => BottomNavigationBarItem(
-                        title: Text(item[text]), icon: Icon(item[icon])))
+                indicatorColor: Theme.of(context).primaryTextTheme.title.color,
+                labelColor: Theme.of(context).primaryTextTheme.title.color,
+                unselectedLabelColor: Theme.of(context)
+                    .primaryTextTheme
+                    .title
+                    .color
+                    .withOpacity(0.75),
+                tabs: navigationItems
+                    .map(
+                        (item) => Tab(text: item[text], icon: Icon(item[icon])))
                     .toList(),
-                currentIndex: _currentIndex,
-                onTap: (index) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
               ),
+            )
+          : BottomNavigationBar(
+              items: navigationItems
+                  .map((item) => BottomNavigationBarItem(
+                      title: Text(item[text]), icon: Icon(item[icon])))
+                  .toList(),
+              currentIndex: _currentIndex,
+              onTap: (index) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
     );
   }
 }

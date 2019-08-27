@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lizi/global/config.dart';
 import 'package:lizi/pages/color_lens_page.dart';
 import 'package:lizi/pages/setting_page.dart';
 import 'package:lizi/ui/about_bar.dart';
@@ -14,7 +13,7 @@ class AboutPage extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           Container(
-            color: Config.primaryColor,
+            color: Theme.of(context).primaryColor,
             height: 260.0,
             child: Center(
               child: ListTile(
@@ -23,7 +22,7 @@ class AboutPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 120.0,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryTextTheme.title.color,
                     fontStyle: FontStyle.italic,
                   ),
                 ),
@@ -33,7 +32,7 @@ class AboutPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22.0,
                     height: 1.6,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryTextTheme.title.color,
                   ),
                 ),
                 onTap: () => showAboutDialog(

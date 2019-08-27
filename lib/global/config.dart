@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Config {
@@ -14,7 +12,7 @@ class Config {
   Config._internal();
 
   String _localPath;
-  String _optionFile = 'option.json';
+  String _optionFile = 'optionV2.json';
   String _historyFile = 'history.json';
 
   static const isFullScreen = 'isFullScreen';
@@ -22,57 +20,37 @@ class Config {
   static const isFlippingAnimation = 'isFlippingAnimation';
   static const isAutoRefresh = 'isAutoRefresh';
   static const isSlidingNavigationBar = 'isSlidingNavigationBar';
+  static const isBrightnessDark = 'isBrightnessDark';
   static const searchTypeIndex = 'searchTypeIndex';
   static const themeIndex = 'themeIndex';
 
   static const searchTypeList = ['模糊', '准确', '精确'];
-  static const List<Color> themeList = [
-    Colors.blueAccent,
-    Colors.greenAccent,
-    Colors.black,
-    Colors.red,
-    Colors.teal,
-    Colors.pink,
-    Colors.amber,
-    Colors.orange,
-    Colors.green,
-    Colors.blue,
-    Colors.lightBlue,
-    Colors.purple,
-    Colors.deepPurple,
-    Colors.indigo,
-    Colors.cyan,
-    Colors.brown,
-    Colors.grey,
-    Colors.blueGrey
-  ];
   static Map<String, dynamic> option = {
     isAutoRefresh: false,
     isFullScreen: true,
     isVolumeControl: false,
     isFlippingAnimation: false,
     isSlidingNavigationBar: true,
+    isBrightnessDark: false,
     searchTypeIndex: 1,
     themeIndex: 0,
   };
   static List<dynamic> history = <dynamic>[];
-  static Color primaryColor = themeList[0];
   static dynamic setTheme;
-  Future<void> init() async { 
+  Future<void> init() async {
     _localPath = await _getLocalPath();
     try {
       String optionString = await _getConfig(_optionFile);
       option = jsonDecode(optionString) as Map<String, dynamic>;
-      primaryColor = themeList[option[themeIndex]];
     } catch (e) {
-      print(e.toString()); 
+      print(e.toString());
     }
-    
+
     try {
       String historyString = await _getConfig(this._historyFile);
       history = jsonDecode(historyString) as List<dynamic>;
     } catch (e) {
-      print(e.toString()); 
+      print(e.toString());
     }
 
     return;
@@ -81,11 +59,6 @@ class Config {
   Future<void> changeOption(item, value) {
     option[item] = value;
     return _saveConfig(_optionFile, option);
-  }
-
-  Future<void> changeTheme(int _themeIndex) {
-    primaryColor = themeList[_themeIndex];
-    return changeOption(themeIndex, _themeIndex);
   }
 
   Future<void> changeHistory({List<String> history}) {

@@ -20,7 +20,7 @@ class OptionSwitchState extends State<OptionSwitch> {
       subtitle: Text(widget._subtitle),
       trailing: Switch(
         value: Config.option[widget._optionName],
-        activeColor: Config.primaryColor,
+        activeColor: Theme.of(context).primaryColor,
         onChanged: (value) async {
           await Config().changeOption(widget._optionName, value);
           setState(() {});

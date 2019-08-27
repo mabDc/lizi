@@ -21,7 +21,7 @@ class SearchPageState extends State<SearchPage> {
         child: RadioListTile<int>(
           value: i,
           title: Text(searchTypeList[i]),
-          activeColor: Config.primaryColor,
+          activeColor: Theme.of(context).primaryColor,
           groupValue: searchTypeIndex,
           onChanged: (value) {
             Config().changeOption(Config.searchTypeIndex, value);
@@ -75,18 +75,14 @@ class SearchPageState extends State<SearchPage> {
         searchHelp.add(Divider());
       }
     }
-
-    final _themeData = ThemeData(primaryColor: Colors.white);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: _themeData.primaryColor,
-        brightness: _themeData.primaryColorBrightness,
-        iconTheme: _themeData.iconTheme,
-        textTheme: _themeData.textTheme,
         title: TextField(
+          cursorColor: Theme.of(context).primaryColor,
           autofocus: true,
           textInputAction: TextInputAction.search,
-          decoration: InputDecoration(hintText: '搜索名称或作者'),
+          decoration:
+              InputDecoration(hintText: '搜索名称或作者', border: InputBorder.none),
           onSubmitted: (keyword) async {
             keyword = keyword.trim();
             if (!Config.history.contains(keyword)) {
@@ -110,11 +106,7 @@ class SearchPageState extends State<SearchPage> {
           ),
         ],
       ),
-      body: Center(
-        child: ListView(
-          children: searchHelp,
-        ),
-      ),
+      body: ListView(children: searchHelp),
     );
   }
 }
